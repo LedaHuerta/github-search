@@ -15,7 +15,7 @@ const NavBar = () => {
                     GitHub Search
                 </Link>
                 <div className="collapse navbar-collapse mt-2" id="navbarToggler">
-                    <div className="navbar-nav ">
+                    <div className="navbar-nav mr-auto">
                         <Link to="/users" className="nav-item nav-link">Profile</Link>
                         <Link to ="/repos" className="nav-item nav-link">Repos</Link>
                     </div>
