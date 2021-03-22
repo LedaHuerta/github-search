@@ -5,7 +5,9 @@ import React, { Fragment } from 'react';
 const Repos = (props) => {
     let { repos } = props;
     return(
-        <table className="table table-hover text-left justify-content-around">
+        <Fragment>
+            <p className="pscroll justify-content-center text-secondary mt-2">Scroll R and L to see more</p>
+            <table className="table table-responsive-sm w-auto table-hover text-left justify-content-around">
                     <thead className="bg-info">
                         <tr>
                             <th>Repo Name</th>
@@ -33,6 +35,7 @@ const Repos = (props) => {
                     </tbody>
                         
                 </table>
+        </Fragment>
     );
 };
 
