@@ -57,11 +57,11 @@ const GithubRepos = () => {
                     
                     <div className="container mt-3">
                         <div className="row">
-                            <div className="col">
+                            <Fragment className="col">
                                 {
                                     repos ? <Repos repos={ repos }/> :  <NotFound/>
                                 }
-                            </div> 
+                            </Fragment> 
                         </div>
                     </div>
                 </div>

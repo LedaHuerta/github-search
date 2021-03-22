@@ -7,7 +7,7 @@ import { axios } from "./axios";
 const GithubUsers = () => {
     const[updateInput, setUpdateInput] = useState('');
     const[profile, setProfile] = useState(null);
-    const[noLoad, setNoLoad] = useState(true);   
+    const[noRequest, setnoRequest] = useState(true);   
     let noProfile = !profile || (profile && profile.length === 0 );
 
     //get the username from user
@@ -26,7 +26,7 @@ const GithubUsers = () => {
         
         if(responseUser && responseUser.data) {
             setProfile(responseUser.data);
-            setNoLoad(false);
+            setnoRequest(false);
         }
         
     };
@@ -65,12 +65,12 @@ const GithubUsers = () => {
                     <div className="container mt-3">
                         <div className="row">
                             <div className="col">
-                                {noLoad && 
+                                {noRequest && 
                                     <div className="row justify-content-center text-secondary mt-2">
                                         <h2>Enter a User Name</h2>
                                     </div>
                                 }
-                                { (noProfile && !noLoad) && <NotFound/> }
+                                { (noProfile && !noRequest) && <NotFound/> }
                                 {
                                     !noProfile &&
                                     <GithubUserProfile profile={ profile }/>
