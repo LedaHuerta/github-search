@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Repos from './Repos';
 import NotFound from './NotFound';
 import { axios } from "./axios";
@@ -8,7 +8,9 @@ import { clientId, clientSecret } from './GithubCredentials';
 const GithubRepos = () => {
     const[updateInput, setUpdateInput] = useState('');
     const[repos, setRepos] = useState(null);
-    
+    const[noRequest, setNoRequest] = useState(true);
+    let noRepos = !repos || (repos && repos.length === 0);
+
     //get the username from user
     const handleChange = (e) => {
         setUpdateInput(e.target.value)
@@ -19,15 +21,21 @@ const GithubRepos = () => {
         const responseRepos = await axios
         .get( `${updateInput}/repos?clientId=${clientId}&clientSecret=${clientSecret}` )
         .catch((err) => {
-            console.log("Error:", err)
+            console.log("Error:", err);
+            setRepos(null);
         })
-        if(responseRepos && responseRepos.data) {
-            console.log("resp> ", responseRepos.data)
-            setRepos(responseRepos.data)
+
+        if(responseRepos && responseRepos.data.length > 0) {
+            setRepos(responseRepos.data);
+            setNoRequest(false);
         }
         
     };
    
+    useEffect(() => {
+        getRepos();
+    }, []);
+
 
     return(
         <Fragment>
@@ -56,12 +64,20 @@ const GithubRepos = () => {
                     </div>
                     
                     <div className="container mt-3">
-                        <div className="row">
-                            <Fragment className="col">
+                        <div className="row d-flex justify-content-center">
+                            <Fragment>
                                 {
-                                    repos ? <Repos repos={ repos }/> :  <NotFound/>
+                                    noRequest &&
+                                    <div className="d-flex justify-content-center text-secondary mt-2">
+                                            <h2>Enter a User Name</h2>
+                                    </div>
                                 }
-                            </Fragment> 
+                                { (noRepos && !noRequest) && <NotFound/> }
+                                {
+                                    !noRepos && <Repos repos={ repos }/>
+                                }
+                            </Fragment>
+                            
                         </div>
                     </div>
                 </div>
