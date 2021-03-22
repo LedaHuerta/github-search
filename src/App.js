@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import GithubUsers from './components/GithubUsers';
 import GithubRepos from './components/GithubRepos';
 import NavBar from './components/NavBar';
-import Home from './components/Home';
+import Home from './components/Home.jsx';
 import './index.css';
 
 function App() {
