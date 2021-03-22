@@ -22,14 +22,14 @@ const Repos = (props) => {
                             
                         <tbody>
                             {
-                            repos.map((repo) => {
-                                    return(
-                                        <tr>
-                                            <td><a href={repo.html_url} target="_blank" rel="noreferrer" className="text-dark">{ repo.name }</a></td>
-                                            <td><span className="badge badge-success mx-2" >{ repo.stargazers_count } Stars</span></td>
-                                            <td><span className="badge badge-warning mx-2">{ repo.watchers_count } Watches</span></td>
-                                        </tr>
-                                    )
+                                repos.map((repo, idx) => {
+                                        return(
+                                            <tr key={idx}>
+                                                <td><a href={repo.html_url} target="_blank" rel="noreferrer" className="text-dark">{ repo.name }</a></td>
+                                                <td><span className="badge badge-success mx-2" >{ repo.stargazers_count } Stars</span></td>
+                                                <td><span className="badge badge-warning mx-2">{ repo.watchers_count } Watches</span></td>
+                                            </tr>
+                                        )
                                 })
                             }
                         </tbody>

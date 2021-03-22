@@ -18,8 +18,11 @@ const GithubRepos = () => {
     const getRepos = async () => {
         const responseRepos = await axios
         .get( `${updateInput}/repos?clientId=${clientId}&clientSecret=${clientSecret}` )
-        .catch((err) => {console.log("Error:", err)})
+        .catch((err) => {
+            console.log("Error:", err)
+        })
         if(responseRepos && responseRepos.data) {
+            console.log("resp> ", responseRepos.data)
             setRepos(responseRepos.data)
         }
         

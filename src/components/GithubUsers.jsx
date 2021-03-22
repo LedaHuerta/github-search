@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import GithubUserProfile from './GithubUserProfile';
 import NotFound from './NotFound';
 import { clientId, clientSecret } from './GithubCredentials';
@@ -7,7 +7,9 @@ import { axios } from "./axios";
 const GithubUsers = () => {
     const[updateInput, setUpdateInput] = useState('');
     const[profile, setProfile] = useState(null);
-    
+    const[noLoad, setNoLoad] = useState(true);   
+    let noProfile = !profile || (profile && profile.length === 0 );
+
     //get the username from user
     const handleChange = (e) => {
         setUpdateInput(e.target.value);
@@ -17,14 +19,22 @@ const GithubUsers = () => {
     const getProfile = async () => {
         const responseUser = await axios
         .get( `${updateInput}?clientId=${clientId}&clientSecret=${clientSecret}` )
-        .catch((err) => {console.log("Error:", err)})
+        .catch((err) => {
+            console.log("Error:", err);
+            setProfile(null);
+        })
         
         if(responseUser && responseUser.data) {
             setProfile(responseUser.data);
+            setNoLoad(false);
         }
         
     };
-       
+    
+    useEffect(() => {
+        getProfile();
+    }, []);
+    
 
     return(
         <Fragment>
@@ -55,8 +65,15 @@ const GithubUsers = () => {
                     <div className="container mt-3">
                         <div className="row">
                             <div className="col">
+                                {noLoad && 
+                                    <div className="row justify-content-center text-secondary mt-2">
+                                        <h2>Enter a User Name</h2>
+                                    </div>
+                                }
+                                { (noProfile && !noLoad) && <NotFound/> }
                                 {
-                                    profile ? <GithubUserProfile profile={ profile }/> : <NotFound/>
+                                    !noProfile &&
+                                    <GithubUserProfile profile={ profile }/>
                                 }
                             </div> 
                         </div>
