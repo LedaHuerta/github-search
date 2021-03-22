@@ -25,7 +25,7 @@ const GithubRepos = () => {
             setRepos(null);
         })
 
-        if(responseRepos && responseRepos.data) {
+        if(responseRepos && responseRepos.data.length > 0) {
             setRepos(responseRepos.data);
             setNoRequest(false);
         }
@@ -64,11 +64,11 @@ const GithubRepos = () => {
                     </div>
                     
                     <div className="container mt-3">
-                        <div className="row">
+                        <div className="row d-flex justify-content-center">
                             <Fragment>
                                 {
                                     noRequest &&
-                                    <div className="row justify-content-center text-secondary mt-2">
+                                    <div className="d-flex justify-content-center text-secondary mt-2">
                                             <h2>Enter a User Name</h2>
                                     </div>
                                 }
@@ -77,11 +77,7 @@ const GithubRepos = () => {
                                     !noRepos && <Repos repos={ repos }/>
                                 }
                             </Fragment>
-                            {/* <Fragment className="col">
-                                {
-                                    repos ? <Repos repos={ repos }/> :  <NotFound/>
-                                }
-                            </Fragment>  */}
+                            
                         </div>
                     </div>
                 </div>
